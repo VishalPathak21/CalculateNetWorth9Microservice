@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: dockersampleconfigdepl
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: CalculateNetWorth9Microservice
+  template:
+    metadata:
+      labels:
+        app: CalculateNetWorth9Microservice
+    spec:
+      containers:
+      - name: dockersamplerepos
+        image: dnazureacrrr.azurecr.io/dockersamplerepos:latest
+        ports:
+        - containerPort: 8080
+      imagePullSecrets:
+      - name: dsconfigsn1
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: calculatenetworth9microservice
+spec:
+  type: LoadBalancer
+  ports:
+  - port: 80
+  selector:
+    app: CalculateNetWorth9Microservice
